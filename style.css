@@ -1,0 +1,30 @@
+.card {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+    border-bottom: black;
+    transition: 0.3s;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    margin-left: 30%;
+    margin-right: 30%; 
+    border-radius: 5px;
+  }
+
+  .danger {
+    background-color: rgb(255, 145, 145);
+  }
+
+  .alert {
+    background-color: rgb(255, 252, 95);
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
+
+  .cidade{
+    font-weight: bold;
+  } 
