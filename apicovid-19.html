@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <style>
+            .card {
+                /* Add shadows to create the "card" effect */
+                box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+                border-bottom: black;
+                transition: 0.3s;
+                padding: 8px 16px;
+                margin-bottom: 20px;
+                margin-left: 30%;
+                margin-right: 30%; 
+                border-radius: 5px;
+              }
+
+              .danger {
+                background-color: rgb(255, 145, 145);
+              }
+
+              .alert {
+                background-color: rgb(255, 252, 95);
+              }
+              
+              /* On mouse-over, add a deeper shadow */
+              .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+              }
+              
+              /* Add some padding inside the card container */
+              .container {
+                padding: 2px 16px;
+              }
+
+              .cidade{
+                font-weight: bold;
+              } 
+        </style>
+    </head>
+<script>
+
+    var resposta
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            this.resposta = JSON.parse(xmlHttp.responseText); 
+            console.log('RESPOSTA :: ', this.resposta);
+
+            for(let i=0; i<this.resposta.length; i++){
+                var content = 
+                "<div class='cidade'>" + 
+                    this.resposta[i].name + 
+                '</div>' + 
+                '<div>' + 
+                    'Casos: ' + this.resposta[i].qtd_confirmation  + 
+                '</div>'; 
+
+                var spn = document.createElement('div');
+                spn.innerHTML = content;
+                spn.id = 'teste'+i;
+                if(this.resposta[i].qtd_confirmation >= 1000){
+                  spn.className = "card danger"
+                }else if(this.resposta[i].qtd_confirmation >= 200 && this.resposta[i].qtd_confirmation < 1000){
+                  spn.className = "card alert" 
+                }else if(this.resposta[i].qtd_confirmation < 200){
+                  spn.className = "card" 
+                }
+                document.getElementById('conteudo').appendChild(spn);
+            }
+        }
+    }
+    xmlHttp.open("GET", "https://api.covid19.finspect.me/brcovid19/map", true); // true for asynchronous 
+    xmlHttp.send(null);
+
+</script>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <div class="navbar-brand" (click)="home()">COVID-19 BRASIL</div>
+          </div>
+          <div class="collapse navbar-collapse" id="nav1">
+
+          </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="conteudo" class="card-columns">
+
+        </div>
+    </div>
+
+</body>
+</html>
